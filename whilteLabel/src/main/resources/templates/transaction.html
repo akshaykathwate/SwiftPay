@@ -1,0 +1,97 @@
+
+</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaction Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: radial-gradient(circle, #d7e1ec, #b5c6d8, #8aa5bf, #6585a8, #466994);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #466994;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background-color: #8aa5bf;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: #8aa5bf;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 25px;
+            color: #fff;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #6585a8;
+            transform: translateY(-3px);
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(101, 133, 168, 0.5);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Transaction Result</h2>
+    <p>Amount: <span th:text="${transaction.amount}"></span></p>
+    <p>Currency: <span th:text="${transaction.currency}"></span></p>
+    <p>Status: <span th:text="${transaction.status}"></span></p>
+    <p>Message: <span th:text="${transaction.message}"></span></p>
+    <a class="btn btn-primary" th:href="@{/payment}">Make Payment</a>
+    <a class="btn btn-primary" th:href="@{/transactionList}"> Check Transaction History</a>
+</div>
+</body>
+</html>
+

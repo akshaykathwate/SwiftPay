@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction List</title>
+</head>
+<body>
+    <h1>All Transactions</h1>
+    <table>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Status</th>
+            <th>Message</th>
+         
+        </tr>
+        <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.transactionId}"></td>
+            <td th:text="${transaction.amount}"></td>
+            <td th:text="${transaction.currency}"></td>
+            <td th:text="${transaction.status}"></td>
+            <td th:text="${transaction.message}"></td>
+           
+        </tr>
+    </table>
+    <a href="/">Back to Home</a>
+</body>
+</html>

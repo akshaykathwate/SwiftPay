@@ -1,0 +1,81 @@
+<div class="min-h-screen bg-gray-50 py-16 px-4">
+  <!-- Navbar -->
+  <app-navbar></app-navbar>
+
+  <!-- Payment Card -->
+  <div class="max-w-3xl mx-auto mt-24 relative p-6">
+    <!-- Moving Border -->
+    <div class="absolute inset-0 bg-gradient-to-r from-teal-300 via-blue-200 to-purple-300 rounded-2xl blur-sm animate-border-light"></div>
+
+    <div class="relative bg-white rounded-2xl shadow-lg p-8">
+      <h2 class="text-3xl font-extrabold text-center text-gray-600 mb-6">
+        SwiftPay Payment Cart
+      </h2>
+
+      <form (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Amount -->
+        <div>
+          <label
+            for="amount"
+            class="block text-lg font-medium text-gray-700 mb-2"
+            >Amount</label
+          >
+          <input
+            id="amount"
+            name="amount"
+            type="number"
+            [(ngModel)]="amount"
+            class="w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-400 transition"
+            placeholder="Enter payment amount"
+            required
+          />
+        </div>
+
+        <!-- Currency -->
+        <div>
+          <label
+            for="currency"
+            class="block text-lg font-medium text-gray-700 mb-2"
+            >Currency</label
+          >
+          <select
+            id="currency"
+            name="currency"
+            [(ngModel)]="currency"
+            class="w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-400 transition"
+            required
+          >
+            <option value="INR">Indian Rupees (INR)</option>
+            <option value="USD">US Dollars (USD)</option>
+          </select>
+        </div>
+
+        <!-- Card Information (Stripe Element) -->
+        <div>
+          <label
+            for="card-element"
+            class="block text-lg font-medium text-gray-700 mb-2"
+            >Card Information</label
+          >
+          <div
+            id="card-element"
+            class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-400 transition"
+          ></div>
+          <p class="text-sm text-gray-500 mt-2">
+            Securely enter your card details powered by Stripe.
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="px-8 py-3 bg-gradient-to-r from-teal-400 to-blue-400 text-white text-lg font-medium rounded-lg shadow-md hover:from-teal-500 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-teal-200 transition-transform transform hover:scale-105"
+          >
+            Pay Now
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

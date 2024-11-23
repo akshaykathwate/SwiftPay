@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Background gradient for a clean look */
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #ffffff);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Payment container with 3D styling */
+        .container {
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Main shadow for 3D effect */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px); /* Slight lift on hover */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        /* Header section with subtle shadow */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #80f434;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for 3D effect */
+        }
+        
+        .header img {
+            max-width: 80px;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #80f438;
+            font-weight: bold;
+            font-size: 1.8em;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        /* Input field styling */
+        .form-control {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+        .form-control:focus {
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        /* Button styling with 3D effects */
+        .btn-primary {
+            background-color: #80f438;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            box-shadow: 0 5px 10px rgba(0, 123, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            box-shadow: 0 8px 16px rgba(0, 123, 255, 0.5);
+            transform: translateY(-3px);
+        }
+    </style>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Header section with company logo and 3D effect -->
+    <div class="header">
+        <img th:src="@{${logoUrl}}" alt="Company Logo">
+    </div>
+    <h2>Make a Payment</h2>
+    <!-- Payment form with improved styling -->
+    <form id="payment-form" th:action="@{/processPayment}" th:object="${transaction}" method="post">
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" class="form-control" th:field="*{amount}" required>
+        </div>
+        <div class="form-group">
+            <label for="currency">Currency:</label>
+            <select id="currency" name="currency" class="form-control" th:field="*{currency}" required>
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="INR">INR - Indian Rupee</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="card-element">Card Details:</label>
+            <div id="card-element" class="form-control"></div>
+            <div id="card-errors" role="alert"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Pay</button>
+    </form>
+</div>
+<script>
+ const stripe = Stripe('pk_test_51QEgZ709kyr1cG0SNil7857LkBsXXo0NZOCAqUmgPxxHzURIyqietDzZEDCnpQPd6yyfMpCv92QRnhFXEFlg3szU00mn0xUesy'); // Replace with your Stripe publishable key
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const {paymentMethod, error} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+        });
+        if (error) {
+            // Display error.message in your UI
+            document.getElementById('card-errors').textContent = error.message;
+        } else {
+            // Add the payment method ID to the form and submit
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'paymentToken');
+            hiddenInput.setAttribute('value', paymentMethod.id);
+            form.appendChild(hiddenInput);
+            // Submit the form
+            form.submit();
+        }
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Container Styling */
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        /* Heading */
+        .login-container h2 {
+            color: #0056b3;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Input Fields */
+        .form-control {
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        /* Button Styling */
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #003d80;
+            transform: scale(1.05);
+        }
+
+        /* Sign Up Message */
+        .signup-message {
+            margin-top: 20px;
+        }
+        .signup-message p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .btn-signup {
+            background-color: #28a745;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-signup:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post" th:action="@{/processLogin}">
+        <div class="form-group">
+            <label for="username" class="sr-only">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="sr-only">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <div th:if="${error}" class="error-message">Username or password is incorrect</div>
+    </form>
+
+    <!-- Sign Up Message and Button -->
+    <div class="signup-message">
+        <p>Don't have an account?</p>
+        <a th:href="@{/signup}" class="btn btn-primary btn-signup">Sign Up</a>
+    </div>
+</div>
+</body>
+</html>
